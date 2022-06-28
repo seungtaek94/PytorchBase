@@ -4,7 +4,7 @@ import cv2
 from typing import Dict, Optional
 
 
-def imwriteKR(file:str, image:np.ndarray, params:Optional[Dict]=None) -> bool:
+def imwrite_kr(file:str, image:np.ndarray, params:Optional[Dict]=None) -> bool:
     """Support for write the image with paths that contain Korean characters.
 
     Args:
@@ -32,7 +32,7 @@ def imwriteKR(file:str, image:np.ndarray, params:Optional[Dict]=None) -> bool:
         return False
 
 
-def imreadKR(file:str, dtype=np.uint8) -> np.ndarray:
+def imread_kr(file:str, dtype=np.uint8) -> np.ndarray:
     """Support for reading the image with paths that contain Korean characters.
 
     Args:
