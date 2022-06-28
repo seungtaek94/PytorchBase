@@ -1,4 +1,3 @@
-from gettext import npgettext
 import torch
 import numpy as np
 import random
@@ -16,3 +15,15 @@ def seed_everything(seed:int): # seed 고정
     torch.backends.cudnn.benchmark = False
     np.random.seed(seed)
     random.seed(seed)
+
+
+def to_numpy(tensor:torch.Tensor) -> np.ndarray:
+    """convert torch.Tensor to numpy.ndarray.
+
+    Args:
+        tensor (torch.Tensor): Input tensor to convert.
+
+    Returns:
+        np.ndarray: Output result.
+    """
+    return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
