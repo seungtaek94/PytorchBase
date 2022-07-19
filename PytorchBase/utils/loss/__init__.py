@@ -1,8 +1,8 @@
 import torch
 
-from .dice import DiceLoss
+from .dice import DiceLoss, AuxDiceLoss
 
-def get_loss(loss:str, weight=None):
+def get_loss(loss:str, weight=None, **kwargs):
         print(f'[Notice] Loss - {loss}')
         if loss == 'margin':
             return torch.nn.MultiLabelMarginLoss()
@@ -16,6 +16,7 @@ def get_loss(loss:str, weight=None):
             return torch.nn.BCEWithLogitsLoss()
         elif loss == 'dice':
             return DiceLoss()
-
+        elif loss == 'aux_dice':
+            return AuxDiceLoss(**kwargs)
         else:
             raise NotImplementedError

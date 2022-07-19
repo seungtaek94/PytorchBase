@@ -186,6 +186,7 @@ def check_onnx_model(
             results.append(allclose_iter(
                 to_numpy(torch_outputs[i]), ort_outputs[i], rtol=rtol, atol=atol, gamma=gamma, iter=iter))
         
+        print(results)
         for i, (result, step) in enumerate(results):
             result_str = "Passed" if result else "Failed"
 
@@ -193,6 +194,8 @@ def check_onnx_model(
                 step_str = "1st"
             elif step == 1:
                 step_str = "2nd"
+            elif step == 2:
+                step_str = "3rd"
             else:
                 step_str = f"{step+1}th"
 

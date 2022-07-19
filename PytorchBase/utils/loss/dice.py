@@ -1,3 +1,5 @@
+from math import gamma
+from turtle import forward
 from typing import Optional, List
 
 import torch
@@ -106,6 +108,36 @@ def to_tensor(x, dtype=None) -> torch.Tensor:
         if dtype is not None:
             x = x.type(dtype)
         return x
+
+
+class AuxDiceLoss(torch.nn.Module):
+    """Auxiliary Dice Loss
+
+        loss = delta * dice(pred) + gamma * dice(aux)
+
+    Args:
+        delta (float): delta value for above equation
+        gamma (float): gamma value for above equation
+    """
+    def __init__(self, delta:float, gamma:float) -> None:
+        super(AuxDiceLoss, self).__init__()
+        
+        self.delta = delta
+        self.gamma = gamma
+        self.dice = DiceLoss()
+
+    def forward(self, y_pred:torch.Tensor, 
+        y_true: torch.Tensor) -> torch.Tensor:
+
+        y_aux, y_pred = y_pred
+
+        loss = self.dice(y_pred, y_true)
+        aux_loss = self.dice(y_aux, y_true)
+
+        loss = self.delta * loss
+        loss = loss + self.gamma * aux_loss
+
+        return loss
 
 
 
